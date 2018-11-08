@@ -1,6 +1,7 @@
 # Project Proposal
 
-    My project idea stems from the OpenFrameworks addon [facetracker](https://github.com/kylemcdonald/ofxFaceTracker). I want to build off 
+    My project idea stems from the OpenFrameworks addon facetracker 
+    <https://github.com/kylemcdonald/ofxFaceTracker>. I want to build off 
     this idea and use it to track facial expressions, and then print out 
     emojis based off these understood expressions. For example, a smile 
     will output the corresponding emoji, and so on. I want this project to 
