@@ -1,4 +1,7 @@
 # Project Proposal
+# Anmol Agrawal
+# CS126 - Emotion Detection Using OpenCV
+
 
 My project idea stems from the OpenFrameworks addon [facetracker] 
     (https://github.com/kylemcdonald/ofxFaceTracker). I want to build off 
@@ -33,7 +36,7 @@ As for the library that I plan to use, the most logical option would
     
 https://medium.freecodecamp.org/facial-recognition-as-aux-driver-8a49dfd477ca - article one the concept
 
-https://ieeexplore.ieee.org/document/7926765 - scholar article on the implementation
+https://ieeexplore.ieee.org/document/7926765 - scholarly article on the implementation
     
 Overall, I am using an OpenFrameworks addon as an inspiration for this project.
 I want to expand on the projects that have been made, as well as incorporate creative ideas of my own. Being able to recognize basic facial expressions is a simplified version of popular projects that many major companies are currently working on. In conclusion, I will be using OpenFrameworks and OpenCV to detect facial expressions and output emojis based off the understood emotions. 
