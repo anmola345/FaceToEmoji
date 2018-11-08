@@ -1,7 +1,7 @@
 # Project Proposal
 
-My project idea stems from the OpenFrameworks addon facetracker 
-    <https://github.com/kylemcdonald/ofxFaceTracker>. I want to build off 
+My project idea stems from the OpenFrameworks addon [facetracker] 
+    (https://github.com/kylemcdonald/ofxFaceTracker). I want to build off 
     this idea and use it to track facial expressions, and then print out 
     emojis based off these understood expressions. For example, a smile 
     will output the corresponding emoji, and so on. I want this project to 
@@ -32,6 +32,8 @@ As for the library that I plan to use, the most logical option would
     project. I want to be able to use this library to the fullest extent 
     in order to recognize facial expressions.
     
+Overall, I am using an OpenFrameworks addon as an inspiration for this project.
+I want to expand on the projects that have been made, as well as incorporate creative ideas of my own. Being able to recognize basic facial expressions is a simplified version of popular projects that many major companies are currently working on. In conclusion, I will be using OpenFrameworks and OpenCV to detect facial expressions and output emojis based off the understood emotions. 
     
     
     
