@@ -7,6 +7,7 @@ using namespace std;
 void ofApp::setup(){
     cam.setup(280, 480);
     finder.setup("haarcascade_eye.xml");
+    // need to make sure that several classifiers are built to keep track of different expressions
     currentFrame.setFromPixels(cam.getPixels());
     finder.findHaarObjects(currentFrame);
 }
