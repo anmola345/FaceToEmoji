@@ -19,14 +19,19 @@ void ofApp::update(){
     if(cam.isFrameNew()){
         currentFrame.setFromPixels(cam.getPixels());
     }
-    eyes.findHaarObjects(currentFrame);
+    eyes.findHaarObjects(picFrame);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
     //ofBackground(255, 255, 255);
     //cam.draw(0,0);
-    currentFrame.draw(0, 0);
+    currentFrame.draw(480, 0);
+    picFrame.draw(0, 0);
+    for(unsigned int i = 0; i < eyes.blobs.size(); i++) {
+        ofRectangle cur = eyes.blobs[i].boundingRect;
+        ofDrawRectangle(cur.x, cur.y, cur.width, cur.height);
+    }
     for(unsigned int i = 0; i < eyes.blobs.size(); i++) {
         ofRectangle cur = eyes.blobs[i].boundingRect;
         ofDrawRectangle(cur.x, cur.y, cur.width, cur.height);
@@ -35,7 +40,10 @@ void ofApp::draw() {
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
+    int upper_key = toupper(key);
+    if(upper_key == 'T') {
+        picFrame.setFromPixels(cam.getPixels());
+    }
 }
 
 //--------------------------------------------------------------

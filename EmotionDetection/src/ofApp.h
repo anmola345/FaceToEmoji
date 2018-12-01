@@ -48,7 +48,7 @@ public:
     void windowResized(int w, int h);
     
     ofVideoGrabber cam;
-    ofImage currentFrame, prevFrame;
+    ofImage currentFrame, picFrame;
     ofxCvHaarFinder eyes;
     ofxCvHaarFinder smile;
 };
