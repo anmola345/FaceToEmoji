@@ -50,7 +50,7 @@ public:
     ofVideoGrabber cam;
     ofImage currentFrame, picFrame;
     ofxCvHaarFinder eyes;
-    ofxCvHaarFinder smile;
+    ofxCvHaarFinder face;
 };
 
 #endif

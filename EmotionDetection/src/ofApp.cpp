@@ -7,10 +7,11 @@ using namespace std;
 void ofApp::setup(){
     cam.setup(280, 480);
     eyes.setup("haarcascade_eye.xml");
-    smile.setup("haarcascade_smile.xml");
+    face.setup("haarcascade_frontalface_default.xml");
     // need to make sure that several classifiers are built to keep track of different expressions
     currentFrame.setFromPixels(cam.getPixels());
     eyes.findHaarObjects(currentFrame);
+    face.findHaarObjects(currentFrame);
 }
 
 //--------------------------------------------------------------
@@ -20,6 +21,8 @@ void ofApp::update(){
         currentFrame.setFromPixels(cam.getPixels());
     }
     eyes.findHaarObjects(picFrame);
+    face.findHaarObjects(picFrame); // how can i change the color of this to make sure that I can tell what
+    // blob is under which haarclassifier
 }
 
 //--------------------------------------------------------------
@@ -28,10 +31,6 @@ void ofApp::draw() {
     //cam.draw(0,0);
     currentFrame.draw(480, 0);
     picFrame.draw(0, 0);
-    for(unsigned int i = 0; i < eyes.blobs.size(); i++) {
-        ofRectangle cur = eyes.blobs[i].boundingRect;
-        ofDrawRectangle(cur.x, cur.y, cur.width, cur.height);
-    }
     for(unsigned int i = 0; i < eyes.blobs.size(); i++) {
         ofRectangle cur = eyes.blobs[i].boundingRect;
         ofDrawRectangle(cur.x, cur.y, cur.width, cur.height);
