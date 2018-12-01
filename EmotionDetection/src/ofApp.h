@@ -49,8 +49,8 @@ public:
     
     ofVideoGrabber cam;
     ofImage currentFrame, prevFrame;
-    ofxCvHaarFinder finder;
-    
+    ofxCvHaarFinder eyes;
+    ofxCvHaarFinder smile;
 };
 
 #endif

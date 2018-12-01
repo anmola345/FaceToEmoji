@@ -6,10 +6,11 @@ using namespace std;
 //--------------------------------------------------------------
 void ofApp::setup(){
     cam.setup(280, 480);
-    finder.setup("haarcascade_eye.xml");
+    eyes.setup("haarcascade_eye.xml");
+    smile.setup("haarcascade_smile.xml");
     // need to make sure that several classifiers are built to keep track of different expressions
     currentFrame.setFromPixels(cam.getPixels());
-    finder.findHaarObjects(currentFrame);
+    eyes.findHaarObjects(currentFrame);
 }
 
 //--------------------------------------------------------------
@@ -18,7 +19,7 @@ void ofApp::update(){
     if(cam.isFrameNew()){
         currentFrame.setFromPixels(cam.getPixels());
     }
-    finder.findHaarObjects(currentFrame);
+    eyes.findHaarObjects(currentFrame);
 }
 
 //--------------------------------------------------------------
@@ -26,8 +27,8 @@ void ofApp::draw() {
     //ofBackground(255, 255, 255);
     //cam.draw(0,0);
     currentFrame.draw(0, 0);
-    for(unsigned int i = 0; i < finder.blobs.size(); i++) {
-        ofRectangle cur = finder.blobs[i].boundingRect;
+    for(unsigned int i = 0; i < eyes.blobs.size(); i++) {
+        ofRectangle cur = eyes.blobs[i].boundingRect;
         ofDrawRectangle(cur.x, cur.y, cur.width, cur.height);
     }
 }
