@@ -13,11 +13,16 @@
 
 class Face {
 public:
+    ofVideoGrabber cam; // the frame that this face will be looking at
+    ofImage currentFrame, picFrame;
     ofxCvHaarFinder face;
     int x; // location of the face
     int y;
     
-    vector<int> findFace();
+    ofRectangle findFace(); // this will look through the blobs and find the largest one
+    void updateFaceBlobs(); // this is where I will update the camera and implement haarfinder for face
+    void setCameraFrame();  // this is where I take the picture and use it to find the face
+    
 };
 
 

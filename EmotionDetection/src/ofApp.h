@@ -31,6 +31,7 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
+#include "ofxSmile.h"
 #include "Face.hpp"
 
 class ofApp : public ofBaseApp{
@@ -54,6 +55,10 @@ public:
     ofxCvHaarFinder face;
     ofxCvHaarFinder smile;
     ofImage emoji;
+    Face faceLocation;
+    
+//    ofxCIDetector detector;
+    
 };
 
 #endif
