@@ -7,57 +7,73 @@ using namespace std;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetBackgroundColor(0, 0, 0);
+    ofSetWindowShape(1000, 1000);
     cam.setup(280, 480);
-    faceLocation.cam.setup(280, 480);
-    faceLocation.face.setup("haarcascade_frontalface_default.xml");
-    emoji.load("Neutral_Face_Emoji.png"); // need to make this emoji smaller
-    eyes.setup("haarcascade_eye.xml");
-    face.setup("haarcascade_frontalface_default.xml");
-    smile.setup("smile_05.xml");
+    //faceLocation.cam.setup(280, 480);
+    //faceLocation.face.setup("haarcascade_frontalface_default.xml");
     
-    // need to make sure that several classifiers are built to keep track of different expressions
+    neutralEmoji.load("Neutral_Face_Emoji.png"); // need to make this emoji smaller
+    neutralEmoji.resize(300, 300);
+    
+//    smileEmoji.load("mildly_happy.jpg");
+//    smileEmoji.resize(300, 300);
+//
+//    laughingEmoji.load("super_happy.jpg");
+//    laughingEmoji.resize(300,300);
+    
+    face.setup("haarcascade_frontalface_default.xml");
     currentFrame.setFromPixels(cam.getPixels());
     face.findHaarObjects(currentFrame);
-    CvHaarClassifier testing;
-    //face.findHaarObjects(currentFrame);
+    smileChecker = 0;
+    previousTime = ofGetElapsedTimef() - 10.0; // I could use this to check for the time and then get 
+    smileMagnitude = 0.0;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     cam.update();
-    if(cam.isFrameNew()){
+    if(cam.isFrameNew()) {
         currentFrame.setFromPixels(cam.getPixels());
-        
+        currentFrame.resize(600, 400);
     }
     
     face.findHaarObjects(picFrame);
-    faceLocation.updateFaceBlobs();
-    //face.findHaarObjects(picFrame); // how can i change the color of this to make sure that I can tell what
-    // blob is under which haarclassifier
-    // i think this is where i have to check which emoji to print out. i think that this should work for now only if a face is
-    // actually in the frame
+    //faceLocation.updateFaceBlobs();
+    smileMagnitude = 0.0;
+    ofxSmile::getSmile(picFrame, smileMagnitude);
+    cout << smileMagnitude << endl;
+    if(smileMagnitude < 2.5 && smileMagnitude > 0.3) {
+        smileChecker = 1;
+        //previousTime = ofGetElapsedTimef();
+    } else if (smileMagnitude <= 0.3) {
+        smileChecker = 2;
+    }
+    else
+        smileChecker = 0;
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-    currentFrame.draw(480, 0);
+    if(smileChecker == 1)
+        neutralEmoji.draw(600,400);
+//    else if(smileChecker == 1)
+//        smileEmoji.draw(600, 400);
+//    else if(smileChecker == 2)
+//        laughingEmoji.draw(600, 400);
+    
+    currentFrame.draw(0, 600);
     picFrame.draw(0, 0);
-    float test = 1.0;
-    if(ofxSmile::getSmile(picFrame, test))
-        emoji.draw(0,0);
+
     ofRectangle largestBlob; // this will be the face
     for(unsigned int i = 0; i < face.blobs.size(); i++) {
-        //cout << "something is working" << endl;
         ofRectangle cur = face.blobs[i].boundingRect;
         if(cur.height > largestBlob.height || cur.width > largestBlob.height)
             largestBlob = cur;
-        //ofDrawRectangle(cur.x, cur.y, cur.width, cur.height);
     }
-    ofDrawRectangle(largestBlob.x, largestBlob.y, largestBlob.width, largestBlob.height); // this is tracking the face
+    //ofDrawRectangle(largestBlob.x, largestBlob.y, largestBlob.width, largestBlob.height); // this is tracking the face
     //ofRectangle finalFace = faceLocation.findFace();
     //ofDrawRectangle(finalFace.x, finalFace.y, finalFace.width, finalFace.height);
-    
-    
 }
 
 //--------------------------------------------------------------
@@ -65,7 +81,9 @@ void ofApp::keyPressed(int key){
     int upper_key = toupper(key);
     if(upper_key == 'T') {
         picFrame.setFromPixels(cam.getPixels());
-        faceLocation.setCameraFrame();
+        picFrame.resize(600, 400);
+        picFrame.setImageType(OF_IMAGE_GRAYSCALE);
+        //faceLocation.setCameraFrame();
     }
     
 }

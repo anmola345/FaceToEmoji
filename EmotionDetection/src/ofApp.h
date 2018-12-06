@@ -54,8 +54,15 @@ public:
     ofxCvHaarFinder eyes;
     ofxCvHaarFinder face;
     ofxCvHaarFinder smile;
-    ofImage emoji;
+    ofImage neutralEmoji;
+    ofImage smileEmoji;
+    ofImage laughingEmoji;
+    //ofImage eyebrowsEmoji;
     Face faceLocation;
+    
+    float previousTime;
+    float smileMagnitude;
+    int smileChecker;
     
 //    ofxCIDetector detector;
     
