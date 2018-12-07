@@ -7,20 +7,20 @@ using namespace std;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetBackgroundColor(0, 0, 0);
+    ofSetBackgroundColor(255, 255, 255);
     ofSetWindowShape(1000, 1000);
     cam.setup(280, 480);
     //faceLocation.cam.setup(280, 480);
     //faceLocation.face.setup("haarcascade_frontalface_default.xml");
     
-    neutralEmoji.load("Neutral_Face_Emoji.png"); // need to make this emoji smaller
-    neutralEmoji.resize(300, 300);
+    emoji.load("Neutral_Face_Emoji.png"); // need to make this emoji smaller
+    emoji.resize(300, 300);
     
-//    smileEmoji.load("mildly_happy.jpg");
-//    smileEmoji.resize(300, 300);
-//
-//    laughingEmoji.load("super_happy.jpg");
-//    laughingEmoji.resize(300,300);
+    //smileEmoji.load("Neutral_Face_Emoji.png");
+    //smileEmoji.resize(300, 300);
+
+    //laughingEmoji.load("super_happy.png");
+    //laughingEmoji.resize(300,300);
     
     face.setup("haarcascade_frontalface_default.xml");
     currentFrame.setFromPixels(cam.getPixels());
@@ -43,28 +43,36 @@ void ofApp::update(){
     smileMagnitude = 0.0;
     ofxSmile::getSmile(picFrame, smileMagnitude);
     cout << smileMagnitude << endl;
-    if(smileMagnitude < 2.5 && smileMagnitude > 0.3) {
+    if(smileMagnitude < 3 && smileMagnitude > 1) {
         smileChecker = 1;
         //previousTime = ofGetElapsedTimef();
-    } else if (smileMagnitude <= 0.3) {
+        emoji.load("super_happy.png");
+    } else if (smileMagnitude <= 1) {
         smileChecker = 2;
+        emoji.load("mildly_happy.png");
     }
-    else
+    else{
         smileChecker = 0;
+        emoji.load("Neutral_Face_Emoji.png");
+    }
+    
+    emoji.resize(300,300);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-    if(smileChecker == 1)
-        neutralEmoji.draw(600,400);
+//    if(smileChecker == 0)
+//        emoji.draw(600,400);
 //    else if(smileChecker == 1)
 //        smileEmoji.draw(600, 400);
 //    else if(smileChecker == 2)
 //        laughingEmoji.draw(600, 400);
+    emoji.draw(600,400);
     
     currentFrame.draw(0, 600);
     picFrame.draw(0, 0);
-
+    
+    //smileEmoji.draw(600,400);
     ofRectangle largestBlob; // this will be the face
     for(unsigned int i = 0; i < face.blobs.size(); i++) {
         ofRectangle cur = face.blobs[i].boundingRect;
