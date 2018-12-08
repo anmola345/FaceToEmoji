@@ -16,18 +16,12 @@ void ofApp::setup(){
     emoji.load("Neutral_Face_Emoji.png"); // need to make this emoji smaller
     emoji.resize(300, 300);
     
-    //smileEmoji.load("Neutral_Face_Emoji.png");
-    //smileEmoji.resize(300, 300);
-
-    //laughingEmoji.load("super_happy.png");
-    //laughingEmoji.resize(300,300);
-    
     face.setup("haarcascade_frontalface_default.xml");
     currentFrame.setFromPixels(cam.getPixels());
     face.findHaarObjects(currentFrame);
     smileChecker = 0;
     previousTime = ofGetElapsedTimef() - 10.0; // I could use this to check for the time and then get 
-    smileMagnitude = 0.0;
+    smileMagnitude = 0.0; 
 }
 
 //--------------------------------------------------------------
@@ -47,11 +41,10 @@ void ofApp::update(){
         smileChecker = 1;
         //previousTime = ofGetElapsedTimef();
         emoji.load("super_happy.png");
-    } else if (smileMagnitude <= 1) {
+    } else if (smileMagnitude <= 1 && smileMagnitude != 0) {
         smileChecker = 2;
         emoji.load("mildly_happy.png");
-    }
-    else{
+    } else {
         smileChecker = 0;
         emoji.load("Neutral_Face_Emoji.png");
     }
@@ -61,24 +54,19 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-//    if(smileChecker == 0)
-//        emoji.draw(600,400);
-//    else if(smileChecker == 1)
-//        smileEmoji.draw(600, 400);
-//    else if(smileChecker == 2)
-//        laughingEmoji.draw(600, 400);
+    
     emoji.draw(600,400);
     
     currentFrame.draw(0, 600);
     picFrame.draw(0, 0);
     
-    //smileEmoji.draw(600,400);
     ofRectangle largestBlob; // this will be the face
     for(unsigned int i = 0; i < face.blobs.size(); i++) {
         ofRectangle cur = face.blobs[i].boundingRect;
         if(cur.height > largestBlob.height || cur.width > largestBlob.height)
             largestBlob = cur;
     }
+    
     //ofDrawRectangle(largestBlob.x, largestBlob.y, largestBlob.width, largestBlob.height); // this is tracking the face
     //ofRectangle finalFace = faceLocation.findFace();
     //ofDrawRectangle(finalFace.x, finalFace.y, finalFace.width, finalFace.height);

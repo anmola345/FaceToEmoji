@@ -1,2 +1,3 @@
+ofxFaceTracker
 ofxOpenCv
 ofxSmile
