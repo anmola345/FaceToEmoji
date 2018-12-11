@@ -13,16 +13,13 @@
 
 class Face {
 public:
-    ofVideoGrabber cam; // the frame that this face will be looking at
-    ofImage currentFrame, picFrame;
+    ofImage picFrame; // i think that I should only take into account the ofImage of the Picframe. that way i can easily keep track of what what
     ofxCvHaarFinder face;
-    int x; // location of the face
-    int y;
-    
+    ofVideoGrabber cam;
     ofRectangle findFace(); // this will look through the blobs and find the largest one
-    void updateFaceBlobs(); // this is where I will update the camera and implement haarfinder for face
+    void updateFaceBlobs(ofImage screenshot); // this is where I will update the camera and implement haarfinder for face
     void setCameraFrame();  // this is where I take the picture and use it to find the face
-    
+    void setupClassifier(std::string xmlFile);
 };
 
 

@@ -32,6 +32,7 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 #include "ofxSmile.h"
+#include "ofxGui.h"
 #include "Face.hpp"
 
 class ofApp : public ofBaseApp{
@@ -49,13 +50,22 @@ public:
     void mouseReleased(int x, int y, int button);
     void windowResized(int w, int h);
     
+    bool drawStartScreen;
+    
+    void toggleFaceTracker();
+    void saveScreen();
+    bool buttonPressed;
+    ofxPanel gui;
+    ofxButton enableFaceTracker;
+    ofxButton takeScreenshot;
+    
+    ofImage screenshot;
     ofVideoGrabber cam;
     ofImage currentFrame, picFrame;
     ofxCvHaarFinder eyes;
     ofxCvHaarFinder face;
     ofxCvHaarFinder smile;
     ofImage emoji;
-    //ofImage eyebrowsEmoji;
     Face faceLocation;
     
     float previousTime;

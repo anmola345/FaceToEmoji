@@ -19,17 +19,23 @@ ofRectangle Face::findFace()
     return largestBlob;
 }
 
-void Face::updateFaceBlobs()
+void Face::updateFaceBlobs(ofImage screenshot)
 {
-    cam.update();
-    if(cam.isFrameNew()){
-        currentFrame.setFromPixels(cam.getPixels());
-    }
-    face.findHaarObjects(picFrame);
+//    cam.update();
+//    if(cam.isFrameNew()){
+//        currentFrame.setFromPixels(cam.getPixels());
+//    }
+    face.setup("haarcascade_frontalface_default.xml");
+    face.findHaarObjects(screenshot);
 }
 
-void Face::setCameraFrame()
+void Face::setupClassifier(std::string xmlFile)
 {
-    picFrame.setFromPixels(cam.getPixels()); // this is where i take the picture for the face
+    face.setup(xmlFile);
 }
+
+//void Face::setCameraFrame()
+//{
+//    picFrame.setFromPixels(cam.getPixels()); // this is where i take the picture for the face
+//}
 

@@ -7,13 +7,19 @@ using namespace std;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    enableFaceTracker.addListener(this, &ofApp::toggleFaceTracker);
+    takeScreenshot.addListener(this, &ofApp::saveScreen);
+    
+    gui.setup();
+    gui.add(enableFaceTracker.setup("Toggle Face Tracker"));
+    gui.add(takeScreenshot.setup("Take Screenshot"));
+    
+    buttonPressed = true;
     ofSetBackgroundColor(255, 255, 255);
     ofSetWindowShape(1000, 1000);
-    cam.setup(280, 480);
-    //faceLocation.cam.setup(280, 480);
-    //faceLocation.face.setup("haarcascade_frontalface_default.xml");
+    cam.setup(260, 480);
     
-    emoji.load("Neutral_Face_Emoji.png"); // need to make this emoji smaller
+    emoji.load("Neutral_Face_Emoji.png");
     emoji.resize(300, 300);
     
     face.setup("haarcascade_frontalface_default.xml");
@@ -25,18 +31,32 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
+void ofApp::toggleFaceTracker()
+{
+    buttonPressed = !buttonPressed;
+}
+
+//--------------------------------------------------------------
+void ofApp::saveScreen()
+{
+    screenshot.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+    screenshot.save("screenshot.png");
+}
+
+//--------------------------------------------------------------
 void ofApp::update(){
     cam.update();
+    
     if(cam.isFrameNew()) {
         currentFrame.setFromPixels(cam.getPixels());
         currentFrame.resize(600, 400);
     }
     
     face.findHaarObjects(picFrame);
-    //faceLocation.updateFaceBlobs();
+    //faceLocation.updateFaceBlobs(picFrame);
     smileMagnitude = 0.0;
     ofxSmile::getSmile(picFrame, smileMagnitude);
-    cout << smileMagnitude << endl;
+    //cout << smileMagnitude << endl;
     if(smileMagnitude < 3 && smileMagnitude > 1) {
         smileChecker = 1;
         //previousTime = ofGetElapsedTimef();
@@ -54,22 +74,22 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-    
+    gui.draw();
     emoji.draw(600,400);
     
     currentFrame.draw(0, 600);
     picFrame.draw(0, 0);
     
-    ofRectangle largestBlob; // this will be the face
-    for(unsigned int i = 0; i < face.blobs.size(); i++) {
-        ofRectangle cur = face.blobs[i].boundingRect;
-        if(cur.height > largestBlob.height || cur.width > largestBlob.height)
-            largestBlob = cur;
+    if(buttonPressed) {
+        ofRectangle largestBlob;
+        for(unsigned int i = 0; i < face.blobs.size(); i++) {
+            ofRectangle cur = face.blobs[i].boundingRect;
+            if(cur.height > largestBlob.height || cur.width > largestBlob.height)
+                largestBlob = cur;
+        }
+        
+        ofDrawRectangle(largestBlob.x, largestBlob.y, largestBlob.width, largestBlob.height); 
     }
-    
-    //ofDrawRectangle(largestBlob.x, largestBlob.y, largestBlob.width, largestBlob.height); // this is tracking the face
-    //ofRectangle finalFace = faceLocation.findFace();
-    //ofDrawRectangle(finalFace.x, finalFace.y, finalFace.width, finalFace.height);
 }
 
 //--------------------------------------------------------------
