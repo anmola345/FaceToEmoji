@@ -1,7 +1,5 @@
 #include "ofApp.h"
 
-#include "Face.hpp"
-
 using namespace cv;
 
 
@@ -9,21 +7,18 @@ using namespace cv;
 void ofApp::setup(){
     enableFaceTracker.addListener(this, &ofApp::toggleFaceTracker);
     takeScreenshot.addListener(this, &ofApp::saveScreen);
-//    enableStartScreen.addListener(this, &ofApp::toggleStartScreen);
     
     drawStartScreen = true;
     gui.setup();
     gui.add(enableFaceTracker.setup("Toggle Face Tracker"));
     gui.add(takeScreenshot.setup("Take Screenshot"));
-//    gui.add(enableStartScreen.setup("Toggle Start Screen"));
     
     buttonPressed = true;
     ofSetBackgroundColor(255, 255, 255);
     ofSetWindowShape(1200, 1000);
     cam.setup(260, 480);
     
-    emoji.load("Neutral_Face_Emoji.png");
-    emoji.resize(300, 300);
+    emoji.setEmoji("Neutral_Face_Emoji.png");
     
     face.setup("haarcascade_frontalface_default.xml");
     currentFrame.setFromPixels(cam.getPixels());
@@ -64,16 +59,14 @@ void ofApp::update(){
     ofxSmile::getSmile(picFrame, smileMagnitude);
     if(smileMagnitude < 3 && smileMagnitude > 1) {
         smileChecker = 1;
-        emoji.load("super_happy.png");
+        emoji.setEmoji("super_happy.png");
     } else if (smileMagnitude <= 1 && smileMagnitude != 0) {
         smileChecker = 2;
-        emoji.load("mildly_happy.png");
+        emoji.setEmoji("mildly_happy.png");
     } else {
         smileChecker = 0;
-        emoji.load("Neutral_Face_Emoji.png");
+        emoji.setEmoji("Neutral_Face_Emoji.png");
     }
-    
-    emoji.resize(500,500);
 }
 
 //--------------------------------------------------------------
@@ -87,7 +80,7 @@ void ofApp::draw() {
     } else {
         ofSetBackgroundColor(255, 255, 255);
         gui.draw();
-        emoji.draw(50, 250);
+        emoji.emojiImage.draw(50, 250);
         
         currentFrame.draw(600, 500);
         picFrame.draw(600, 0);
@@ -112,10 +105,8 @@ void ofApp::keyPressed(int key){
         picFrame.setFromPixels(cam.getPixels());
         picFrame.resize(600, 475);
         picFrame.setImageType(OF_IMAGE_GRAYSCALE);
-        //faceLocation.setCameraFrame();
     } else if(upper_key == 'S') {
         drawStartScreen = !drawStartScreen;
-        //faceLocation.setCameraFrame();
     }
     
 }
