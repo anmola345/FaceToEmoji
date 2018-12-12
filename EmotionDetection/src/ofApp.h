@@ -53,11 +53,15 @@ public:
     bool drawStartScreen;
     
     void toggleFaceTracker();
+    void toggleStartScreen();
     void saveScreen();
     bool buttonPressed;
     ofxPanel gui;
     ofxButton enableFaceTracker;
     ofxButton takeScreenshot;
+    ofxButton enableStartScreen;
+    
+    ofTrueTypeFont verdana14;
     
     ofImage screenshot;
     ofVideoGrabber cam;
