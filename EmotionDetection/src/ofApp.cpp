@@ -19,7 +19,7 @@ void ofApp::setup(){
     
     buttonPressed = true;
     ofSetBackgroundColor(255, 255, 255);
-    ofSetWindowShape(1000, 1000);
+    ofSetWindowShape(1200, 1000);
     cam.setup(260, 480);
     
     emoji.load("Neutral_Face_Emoji.png");
@@ -29,12 +29,7 @@ void ofApp::setup(){
     currentFrame.setFromPixels(cam.getPixels());
     face.findHaarObjects(currentFrame);
     smileChecker = 0;
-    previousTime = ofGetElapsedTimef() - 10.0;
     smileMagnitude = 0.0;
-    
-    verdana14.load("verdana.ttf", 14, true, true);
-    verdana14.setLineHeight(18.0f);
-    verdana14.setLetterSpacing(1.037);
 }
 
 //--------------------------------------------------------------
@@ -62,14 +57,13 @@ void ofApp::update(){
     
     if(cam.isFrameNew()) {
         currentFrame.setFromPixels(cam.getPixels());
-        currentFrame.resize(600, 400);
+        currentFrame.resize(600, 475);
     }
     face.findHaarObjects(picFrame);
     smileMagnitude = 0.0;
     ofxSmile::getSmile(picFrame, smileMagnitude);
     if(smileMagnitude < 3 && smileMagnitude > 1) {
         smileChecker = 1;
-        //previousTime = ofGetElapsedTimef();
         emoji.load("super_happy.png");
     } else if (smileMagnitude <= 1 && smileMagnitude != 0) {
         smileChecker = 2;
@@ -79,7 +73,7 @@ void ofApp::update(){
         emoji.load("Neutral_Face_Emoji.png");
     }
     
-    emoji.resize(300,300);
+    emoji.resize(500,500);
 }
 
 //--------------------------------------------------------------
@@ -93,10 +87,10 @@ void ofApp::draw() {
     } else {
         ofSetBackgroundColor(255, 255, 255);
         gui.draw();
-        emoji.draw(600,400);
+        emoji.draw(50, 250);
         
-        currentFrame.draw(0, 600);
-        picFrame.draw(0, 0);
+        currentFrame.draw(600, 500);
+        picFrame.draw(600, 0);
         
         if(buttonPressed) {
             ofRectangle largestBlob;
@@ -106,7 +100,7 @@ void ofApp::draw() {
                     largestBlob = cur;
             }
             
-            ofDrawRectangle(largestBlob.x, largestBlob.y, largestBlob.width, largestBlob.height);
+            ofDrawRectangle(largestBlob.x + 600, largestBlob.y, largestBlob.width, largestBlob.height);
         }
     }
 }
@@ -116,7 +110,7 @@ void ofApp::keyPressed(int key){
     int upper_key = toupper(key);
     if(upper_key == 'T') {
         picFrame.setFromPixels(cam.getPixels());
-        picFrame.resize(600, 400);
+        picFrame.resize(600, 475);
         picFrame.setImageType(OF_IMAGE_GRAYSCALE);
         //faceLocation.setCameraFrame();
     } else if(upper_key == 'S') {
@@ -125,53 +119,3 @@ void ofApp::keyPressed(int key){
     }
     
 }
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-//void ofApp::mouseEntered(int x, int y){
-//
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::mouseExited(int x, int y){
-//
-//}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-//void ofApp::gotMessage(ofMessage msg){
-//
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::dragEvent(ofDragInfo dragInfo){
-//
-//}
