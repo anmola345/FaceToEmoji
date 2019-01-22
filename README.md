@@ -1,4 +1,4 @@
-# FinalProject
+# FaceToEmoji
 For this project, I was trying to use computer vision to detect a user's facial expressions, and based off their expressions, print out the corresponding emoji. I invisioned this project as having the potential to become a possible iMessage addon in which users would be able to text emojis with much more ease. This project uses OpenFrameworks and a variety of addons to determine how much the user is smiling, and then print out a corresponding emoji. I tried to work on this product using a vaiety of methods and approaches, but the possibilities were limited becaue of what the openframeworks addons and C++ were capable of. For now, this project can detect whether or not you are smiling, and if you are, whether it is a big or small smile.
 
 # For the User
