@@ -36,7 +36,7 @@ public:
     Emoji emoji;
     
     float smileMagnitude;
-    int smileChecker
+    int smileChecker;
 };
 
 #endif
